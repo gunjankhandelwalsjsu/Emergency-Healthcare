@@ -207,6 +207,7 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
                           LatLng placeLL=null;
                           String placeName="";
                           String vicinity="";
+
                           int currIcon = otherIcon;
                           try{
 
@@ -228,6 +229,11 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
                               vicinity = placeObject.getString("vicinity");
                               //name
                               placeName = placeObject.getString("name");
+                          //    mTextView.setText("The markers are " + formatNumber(distance) + " apart.");
+
+                              mMap.setTrafficEnabled(true);
+
+
                           }
                           catch(JSONException jse){
                               Log.v("PLACES", "missing value");
@@ -235,13 +241,17 @@ public class MapsActivity extends FragmentActivity implements LocationProvider.L
                               jse.printStackTrace();
                           }
                           //if values missing we don't display
-                          if(missingValue)	places[p]=null;
-                          else
-                              places[p]=new MarkerOptions()
+                          if(missingValue)
+                              places[p]=null;
+                          else {
+                              places[p] = new MarkerOptions()
                                       .position(placeLL)
                                       .title(placeName)
                                       .icon(BitmapDescriptorFactory.fromResource(currIcon))
                                       .snippet(vicinity);
+
+                    //          double distance = SphericalUtil.computeDistanceBetween(places[p].getPosition(), options.getPosition());
+                          }
                       }
                   }
                   catch (Exception e) {
